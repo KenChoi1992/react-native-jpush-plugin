@@ -10,6 +10,7 @@ npm install jpush-for-react-native --save
 - 使用Android Studio import你的React Native应用（选择你的React Native应用所在目录下的android文件夹即可）
 
 - 修改android项目下的setting.gradle配置：
+
 > setting.gradle
 
 ```
@@ -19,6 +20,7 @@ project(':jpush-for-react-native').projectDir = new File(rootProject.projectDir,
 ```
 
 - 修改app下的build.gradle配置：
+
 > your react native project/android/app/build.gradle
 
 ```
@@ -34,6 +36,7 @@ dependencies {
 ![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin1.png)
 
 - 打开jpush-for-react-native的build.gradle文件，修改相关配置：
+
 > jpush-for-react-native/android/build.gradle
 
 ![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin2.png)
@@ -41,6 +44,7 @@ dependencies {
 将此处的yourAppKey替换成你在官网上申请的应用的AppKey
 
 - 打开app下的MainActivity，在ReactInstanceManager的build方法中加入JPushPackage：
+
 > app/MainActivity.java
 
 ![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin3.png)
