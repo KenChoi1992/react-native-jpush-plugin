@@ -53,7 +53,7 @@ if (JPushModule) {
 
 		resumePush: (success, error) => safeCallback('resumePush', success, error),
 
-		initModule: (callback) => JPushModule.initModule(map => callback(map)),
+		getInfo: (callback) => JPushModule.getInfo(map => callback(map)),
 
 		setTag: tag => JPushModule.setTag(tag),
 

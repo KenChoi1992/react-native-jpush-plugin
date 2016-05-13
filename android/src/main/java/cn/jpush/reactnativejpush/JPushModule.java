@@ -75,7 +75,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initModule(Callback successCallback) {
+    public void getInfo(Callback successCallback) {
         WritableMap map = Arguments.createMap();
         String appKey = "AppKey:" + ExampleUtil.getAppKey(getReactApplicationContext());
         map.putString("myAppKey", appKey);
