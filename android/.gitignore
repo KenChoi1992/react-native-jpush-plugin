@@ -1,5 +1,8 @@
-/build
-# .idea
-
-.idea/
+# Gradle files
 .gradle/
+gradle.properties
+build/
+build-res/
+/*/build/
+*.iml
+.idea
