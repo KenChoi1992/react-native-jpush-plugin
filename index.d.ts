@@ -26,11 +26,11 @@ declare module JPush {
 		resumePush(success, error): void,
 
 		/**
-		 * 初始化模块
+		 * 获取基本信息
 		 *
 		 * @param {Function} [callback] (description)
 		 */
-		initModule(callback?: Function): void,
+		getInfo(callback?: Function): void,
 
 		/**
 		 * 设置tag
