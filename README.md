@@ -73,7 +73,18 @@ componentDidMount() {
 关于JPushModule的具体方法可以参考jpush-for-react-native文件夹下的index.js文件，此处将方法罗列如下：
 
 - initPush()
-- initModule()
+- getInfo(map)
+```
+JPushModule.getInfo((map) => {
+      this.setState({
+            appkey: map.myAppKey,
+            imei: map.myImei,
+            package: map.myPackageName,
+            deviceId: map.myDeviceId,
+            version: map.myVersion
+      });
+    });
+```
 - stopPush()
 - resumePush()
 - setTag(tag)
@@ -84,6 +95,10 @@ componentDidMount() {
 - removeReceiveCustomMsgListener()
 - addReceiveNotificationListener()
 - removeReceiveNotificationListener()
+
+---
+贡献者列表
+- [bang88](https://github.com/bang88)
 
 
 
