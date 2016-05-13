@@ -29,8 +29,21 @@ declare module JPush {
 		 * 获取基本信息
 		 *
 		 * @param {Function} [callback] (description)
+		 * @returns {{
+		 * 			appkey: string,
+		 * 			imei: string,
+		 * 			package: string,
+		 * 			deviceId: string,
+		 * 			version: string
+		 * 		}} (description)
 		 */
-		getInfo(callback?: Function): void,
+		getInfo(callback?: Function): {
+			appkey: string,
+			imei: string,
+			package: string,
+			deviceId: string,
+			version: string
+		},
 
 		/**
 		 * 设置tag
