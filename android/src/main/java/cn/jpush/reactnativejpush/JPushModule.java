@@ -118,7 +118,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     //为用户设置Tag,可以在服务端根据Tag推送消息
     @ReactMethod
-    public void setTag(String str) {
+    public void setTag(String str, final Callback callback) {
         mContext = getCurrentActivity();
         final String tag = str.trim();
         Log.i(TAG, "tag: " + tag);
@@ -145,15 +145,18 @@ public class JPushModule extends ReactContextBaseJavaModule {
                                     Log.i(TAG, "Set tag success. tag: " + tag);
                                     Toast.makeText(getReactApplicationContext(),
                                             "Set tag success", Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set tag success. tag: " + tag);
                                     break;
                                 case 6002:
                                     Log.i(TAG, "Set tag timeout");
                                     Toast.makeText(getReactApplicationContext(),
                                             "Set tag timeout, check your network", Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set tag timeout");
                                     break;
                                 default:
                                     Toast.makeText(getReactApplicationContext(),
                                             "Error code: " + status, Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set tag failed. Error code: " + status);
                             }
                         }
                     });
@@ -164,9 +167,9 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     //为用户设置别名,可以在服务端根据别名推送
     @ReactMethod
-    public void setAlias(String str) {
+    public void setAlias(String str, final Callback callback) {
         mContext = getCurrentActivity();
-        String alias = str.trim();
+        final String alias = str.trim();
         Log.i(TAG, "alias: " + alias);
         if (!TextUtils.isEmpty(alias)) {
             JPushInterface.setAliasAndTags(getReactApplicationContext(), alias,
@@ -178,15 +181,18 @@ public class JPushModule extends ReactContextBaseJavaModule {
                                     Log.i(TAG, "Set alias success");
                                     Toast.makeText(getReactApplicationContext(),
                                             "Set alias success", Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set alias success. alias: " + alias);
                                     break;
                                 case 6002:
                                     Log.i(TAG, "Set alias timeout");
                                     Toast.makeText(getReactApplicationContext(),
                                             "set alias timeout, check your network", Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set alias timeout");
                                     break;
                                 default:
                                     Toast.makeText(getReactApplicationContext(),
                                             "Error code: " + status, Toast.LENGTH_SHORT).show();
+                                    callback.invoke("Set alias failed. Error code: " + status);
                             }
                         }
                     });
@@ -224,6 +230,13 @@ public class JPushModule extends ReactContextBaseJavaModule {
         builder.developerArg0 = "developerArg2";
         JPushInterface.setPushNotificationBuilder(2, builder);
         Toast.makeText(mContext, "Custom Builder - 2", Toast.LENGTH_SHORT).show();
+    }
+
+    @ReactMethod
+    public void getRegistrationID(Callback callback) {
+        mContext = getCurrentActivity();
+        String id = JPushInterface.getRegistrationID(mContext);
+        callback.invoke(id);
     }
 
     public static class JPushReceiver extends BroadcastReceiver {

@@ -1,4 +1,4 @@
-import {NativeModules, DeviceEventEmitter} from 'react-native';
+import {NativeModules, Platform, DeviceEventEmitter} from 'react-native';
 
 const JPushModule = NativeModules.JPushModule;
 
@@ -43,11 +43,15 @@ if (JPushModule) {
 
 	JPush = {
 		/**
+		 * Android only
 		 * 初始化JPush 必须先初始化才能执行其他操作
 		 * @param  {any} success 成功的cb
 		 * @param  {any} error 失败的cb
 		 */
-		initPush: (success, error) => safeCallback('initPush', success, error),
+		 if (Platform.OS !== 'ios') {
+		 	initPush: (success, error) => safeCallback('initPush', success, error),
+		 }
+		
 
 		stopPush: (success, error) => safeCallback('stopPush', success, error),
 

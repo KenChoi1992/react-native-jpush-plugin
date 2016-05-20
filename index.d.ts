@@ -4,6 +4,7 @@ declare module JPush {
 
 	export interface JPushInterface {
 		/**
+		 * Android only
 		 * 初始化JPush 必须先初始化才能执行其他操作
 		 * @param  {any} success 成功的cb
 		 * @param  {any} error 失败的cb
