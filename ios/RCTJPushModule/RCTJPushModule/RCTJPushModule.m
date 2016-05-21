@@ -9,7 +9,6 @@
 #import "RCTJPushModule.h"
 #import "RCTEventDispatcher.h"
 #import "RCTRootView.h"
-#import "AppDelegate.h"
 #import "RCTBridge.h"
 
 @implementation RCTJPushModule
@@ -50,10 +49,6 @@ RCT_EXPORT_MODULE();
                     selector:@selector(networkDidReceiveMessage:)
                         name:kJPFNetworkDidReceiveMessageNotification
                       object:nil];
-//  [defaultCenter addObserver:self
-//                    selector:@selector(serviceError:)
-//                        name:kJPFServiceErrorNotification
-//                      object:nil];
   
   return self;
 }
@@ -117,7 +112,6 @@ RCT_EXPORT_METHOD(getAppkeyWithcallback:(RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location callback:(RCTResponseSenderBlock)callback) {
-  NSLog(@"huangmin  add event is call");
   callback(@[name]);
 }
 
@@ -190,10 +184,11 @@ RCT_EXPORT_METHOD( setTag:(NSString *)tags
   
   NSSet *tagSet;
   NSString *aliasString;
-  
+
   if (tags != NULL) {
     tagSet = [NSSet setWithObject:tags];
   }
+  
   self.asyCallback = callback;
   [JPUSHService setTags:tagSet alias:nil callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
 }
@@ -204,12 +199,8 @@ RCT_EXPORT_METHOD( setTag:(NSString *)tags
 RCT_EXPORT_METHOD( setAlias:(NSString *)alias
                   callback:(RCTResponseSenderBlock)callback) {
   
-  NSSet *tagSet;
   NSString *aliasString;
   
-  if (tags != NULL) {
-    tagSet = [NSSet setWithObject:tags];
-  }
   self.asyCallback = callback;
   [JPUSHService setTags:nil alias:alias callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
 }
@@ -324,26 +315,6 @@ RCT_EXPORT_METHOD( setLocalNotification:(NSDate *)fireDate
                            soundName:soundName];
 }
 
-/*!
- * @abstract 本地推送 (支持 iOS8 新参数)
- *
- * IOS8新参数
- * @param region 自定义参数
- * @param regionTriggersOnce 自定义参数
- * @param category 自定义参数
- */
-//RCT_EXPORT_METHOD( setLocalNotification:(NSDate *)fireDate
-//                              alertBody:(NSString *)alertBody
-//                                  badge:(int)badge
-//                            alertAction:(NSString *)alertAction
-//                          identifierKey:(NSString *)notificationKey
-//                               userInfo:(NSDictionary *)userInfo
-//                              soundName:(NSString *)soundName
-//                                 region:(CLRegion *)region
-//                     regionTriggersOnce:(BOOL)regionTriggersOnce
-//                               category:(NSString *)category) {
-//
-//}
 
 /*!
  * @abstract 前台展示本地推送
