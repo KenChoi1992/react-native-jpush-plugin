@@ -6,7 +6,10 @@
 
 ```
 npm install jpush-for-react-native --save
+
+rnpm link jpush-for-react-native
 ```
+
 - 使用Android Studio import你的React Native应用（选择你的React Native应用所在目录下的android文件夹即可）
 
 - 修改android项目下的setting.gradle配置：
@@ -96,6 +99,16 @@ JPushModule.getInfo((map) => {
 - addReceiveNotificationListener()
 - removeReceiveNotificationListener()
 
+
+####iOS Usage
+- 根据这篇教程[JPush 集成文档](http://docs.jpush.io/client/ios_sdk/#ios-sdk_1) 添加jpush所需的类库和配置信息
+- JPushHelper 类中定义了react调用原生JPush方法的接口
+- 在AppDelegate 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示
+```
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  [JPUSHService registerDeviceToken:deviceToken];
+}
 ---
 贡献者列表
 - [bang88](https://github.com/bang88)
