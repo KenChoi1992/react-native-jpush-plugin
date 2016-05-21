@@ -109,6 +109,7 @@ JPushModule.getInfo((map) => {
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
+```
 ---
 贡献者列表
 - [bang88](https://github.com/bang88)
