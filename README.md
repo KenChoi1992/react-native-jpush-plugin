@@ -101,9 +101,9 @@ JPushModule.getInfo((map) => {
 
 
 ####iOS Usage
-- 根据这篇教程[JPush 集成文档](http://docs.jpush.io/client/ios_sdk/#ios-sdk_1) 添加jpush所需的类库和配置信息
-- JPushHelper 类中定义了react调用原生JPush方法的接口
-- 在AppDelegate 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示
+- 在工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework
+- JPushModule 类中定义了react调用原生JPush方法的接口
+- 在AppDelegate.m 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示
 ```
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
