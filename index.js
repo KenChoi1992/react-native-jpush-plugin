@@ -48,11 +48,9 @@ if (JPushModule) {
 		 * @param  {any} success 成功的cb
 		 * @param  {any} error 失败的cb
 		 */
-		 if (Platform.OS !== 'ios') {
-		 	initPush: (success, error) => safeCallback('initPush', success, error),
-		 }
+		 
+		initPush: (success, error) => safeCallback('initPush', success, error),
 		
-
 		stopPush: (success, error) => safeCallback('stopPush', success, error),
 
 		resumePush: (success, error) => safeCallback('resumePush', success, error),
