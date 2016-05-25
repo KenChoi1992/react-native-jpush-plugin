@@ -57,9 +57,6 @@ export default class JPush {
 		});
 	}
 
-	/**
-	 * Android 
-	*/
 	static setTag(tag, success, error) {
 		JPushModule.setTag(tag, (resultCode) => {
 			if (resultCode === 0) {
@@ -70,9 +67,6 @@ export default class JPush {
 		});
 	}
 	
-	/**
-	 * Android 
-	*/
 	static setAlias(alias, success, error) {
 		JPushModule.setAlias(alias, (resultCode) => {
 			if (resultCode === 0) {
@@ -125,61 +119,59 @@ export default class JPush {
  		listeners[cb] = null;
  	}
 
+ 	/**
+	 * iOS
+	*/
  	static getRegistrationID(cb) {
  		JPushModule.getRegistrationID((id) => {
  			cb(id);
  		});
  	}
 
+ 	/**
+	 * iOS
+	*/
 	static setupPush() {
 		JPushModule.setupPush;
 	}
 
-
+ 	/**
+	 * iOS
+	*/
      static getAppkeyWithcallback(cb) {
      	JPushModule.getAppkeyWithcallback((appkey) => {
      		cb(appkey);
      	});
      }
 
-     static setTag(tag, success, fail) {
-     	JPushModule.setTags(tag, null, (resultCode) => {
-     		if (resultCode == 0) {
-     			success;
-     		} else {
-     			fail;
-     		}
-     	});
-     }
 
-     static setAlias(alias, success, fail) {
-     	JPushModule.setTags(null, alias, (resultCode) => {
-     		if (resultCode == 0) {
-     			success;
-     		} else {
-     			fail;
-     		}
-     	})
-     }
-
+ 	/**
+	 * iOS
+	*/
   	static addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName) {
   		JPushModule.addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName);
   	}
-//  add listener
+
+ 	/**
+	 * iOS
+	*/
+     static setBadge(badge, cb){
+     	JPushModule.setBadge(badge, () => {
+
+     	});
+     }
+
+     //  add listener
         // NativeAppEventEmitter.addListener('networkDidSetup', (token) => {
-        // this.setState({ connectStatus: '已连接' });
+        // 
         // });
         // NativeAppEventEmitter.addListener('networkDidClose', (token) => {
-        // this.setState({ connectStatus: '连接已断开' });
+        // 
         // });
         // NativeAppEventEmitter.addListener('networkDidRegister', (token) => {
-        // this.setState({ connectStatus: '已注册' });
+        // 
         // });
         // NativeAppEventEmitter.addListener('networkDidLogin', (token) => {
-        // this.setState({ connectStatus: '已登陆' });
+        // 
         // });
-
-     static setBadge(badge, cb){
-
-     }
 }
