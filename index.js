@@ -57,22 +57,25 @@ export default class JPush {
 		});
 	}
 
-	static setTag(tag, success, error) {
+	static setTag(tag, success, fail) {
 		JPushModule.setTag(tag, (resultCode) => {
+
 			if (resultCode === 0) {
-				success;
+				console.log('success');
+				success();
 			} else {
-				error;
+				console.log('fail');
+				fail();
 			}
 		});
 	}
 	
-	static setAlias(alias, success, error) {
+	static setAlias(alias, success, fail) {
 		JPushModule.setAlias(alias, (resultCode) => {
 			if (resultCode === 0) {
-				success;
+				success();
 			} else {
-				error;
+				fail();
 			}
 		});
 	}

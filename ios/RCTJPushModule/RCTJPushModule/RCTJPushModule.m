@@ -27,7 +27,7 @@ RCT_EXPORT_MODULE();
 
 - (id)init {
   self = [super init];
-
+  
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(networkDidSetup:)
@@ -125,7 +125,7 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location callba
 // * @discussion 这是旧版本的启动方法, 依赖于 PushConfig.plist 文件. 建议不要使用, 已经过期.
 // */
 //RCT_EXPORT_METHOD(setupWithOption:(NSDictionary *)launchingOption __attribute__((deprecated("JPush 2.1.0 版本已过期")))) {
-//  
+//
 //}
 
 /*!
@@ -140,9 +140,9 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location callba
  * 此接口必须在 App 启动时调用, 否则 JPush SDK 将无法正常工作.
  */
 RCT_EXPORT_METHOD(setupWithOption:(NSDictionary *)launchingOption
-                           appKey:(NSString *)appKey
-                          channel:(NSString *)channel
-                 apsForProduction:(BOOL)isProduction) {
+                  appKey:(NSString *)appKey
+                  channel:(NSString *)channel
+                  apsForProduction:(BOOL)isProduction) {
   
 }
 
@@ -160,7 +160,7 @@ RCT_EXPORT_METHOD(setupWithOption:(NSDictionary *)launchingOption
  * @discussion
  */
 RCT_EXPORT_METHOD(registerForRemoteNotificationTypes:(NSUInteger)types
-                                          categories:(NSSet *)categories) {
+                  categories:(NSSet *)categories) {
   [JPUSHService registerForRemoteNotificationTypes:types categories:categories];
 }
 
@@ -179,18 +179,20 @@ RCT_EXPORT_METHOD(handleRemoteNotification:(NSDictionary *)remoteInfo) {
 /*!
  * 设置 tags 的方法
  */
-RCT_EXPORT_METHOD( setTag:(NSString *)tags
+RCT_EXPORT_METHOD( setTag:(NSArray *)tags
                   callback:(RCTResponseSenderBlock)callback) {
   
   NSSet *tagSet;
-  NSString *aliasString;
-
+  
   if (tags != NULL) {
-    tagSet = [NSSet setWithObject:tags];
+    tagSet = [NSSet setWithArray:tags];
   }
   
   self.asyCallback = callback;
-  [JPUSHService setTags:tagSet alias:nil callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+  
+  [JPUSHService setTags:tags alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+    callback(@[@(iResCode)]);
+  }];
 }
 
 /*!
@@ -202,7 +204,10 @@ RCT_EXPORT_METHOD( setAlias:(NSString *)alias
   NSString *aliasString;
   
   self.asyCallback = callback;
-  [JPUSHService setTags:nil alias:alias callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+  
+  [JPUSHService setTags:nil alias:alias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+    callback(@[@(iResCode)]);
+  }];
 }
 
 /*!
@@ -299,13 +304,13 @@ RCT_EXPORT_METHOD(setLocation:(CLLocation *)location) {
  * @discussion 最多支持 64 个定义
  */
 RCT_EXPORT_METHOD( setLocalNotification:(NSDate *)fireDate
-                              alertBody:(NSString *)alertBody
-                                  badge:(int)badge
-                            alertAction:(NSString *)alertAction
-                          identifierKey:(NSString *)notificationKey
-                               userInfo:(NSDictionary *)userInfo
-                              soundName:(NSString *)soundName) {
-
+                  alertBody:(NSString *)alertBody
+                  badge:(int)badge
+                  alertAction:(NSString *)alertAction
+                  identifierKey:(NSString *)notificationKey
+                  userInfo:(NSDictionary *)userInfo
+                  soundName:(NSString *)soundName) {
+  
   [JPUSHService setLocalNotification:fireDate
                            alertBody:alertBody
                                badge:badge
@@ -325,7 +330,7 @@ RCT_EXPORT_METHOD( setLocalNotification:(NSDate *)fireDate
  * @discussion 默认App在前台运行时不会进行弹窗，在程序接收通知调用此接口可实现指定的推送弹窗。
  */
 RCT_EXPORT_METHOD( showLocalNotificationAtFront:(UILocalNotification *)notification
-                                  identifierKey:(NSString *)notificationKey) {
+                  identifierKey:(NSString *)notificationKey) {
   [JPUSHService showLocalNotificationAtFront:notification identifierKey:notificationKey];
 }
 /*!
@@ -415,7 +420,7 @@ RCT_EXPORT_METHOD(resetBadge) {
  * 更多的理解请参考 JPush 的文档网站.
  */
 RCT_EXPORT_METHOD(registrationIDWithcallback:(RCTResponseSenderBlock)callback) {// -> string
-
+  
   callback(@[[JPUSHService registrationID]]);
 }
 
