@@ -33,77 +33,103 @@ const safeCallback = (fn, success, error) => {
 
 }
 
+export default class JPush {
 
-
-let JPush;
-
-
-// 如果JPushModule没有定义，说明可能没有成功安装插件，需要提醒用户重新安装一下
-if (JPushModule) {
-
-	JPush = {
-		/**
-		 * Android only
-		 * 初始化JPush 必须先初始化才能执行其他操作
-		 * @param  {any} success 成功的cb
-		 * @param  {any} error 失败的cb
-		 */
-		 
-		initPush: (success, error) => safeCallback('initPush', success, error),
-		
-		stopPush: (success, error) => safeCallback('stopPush', success, error),
-
-		resumePush: (success, error) => safeCallback('resumePush', success, error),
-
-		getInfo: (callback) => JPushModule.getInfo(map => callback(map)),
-
-		setTag: tag => JPushModule.setTag(tag),
-
-		setAlias: alias => JPushModule.setAlias(alias),
-
-		setStyleBasic: () => JPushModule.setStyleBasic(),
-
-		setStyleCustom: () => JPushModule.setStyleCustom(),
-
-		addReceiveCustomMsgListener: (cb) => {
-			listeners[cb] = DeviceEventEmitter.addListener(receiveCustomMsgEvent,
-				(message) => {
-					cb(message);
-				});
-		},
-
-		removeReceiveCustomMsgListener: (cb) => {
-			if (!listeners[cb]) {
-				return;
-			}
-			listeners[cb].remove();
-			listeners[cb] = null;
-		},
-
-		addReceiveNotificationListener: (cb) => {
-			listeners[cb] = DeviceEventEmitter.addListener(receiveNotificationEvent,
-				(message) => {
-					cb(message);
-				});
-		},
-
-		removeReceiveNotificationListener: (cb) => {
-			if (!listeners[cb]) {
-				return;
-			}
-			listeners[cb].remove();
-			listeners[cb] = null;
-		}
-
+	/**
+	 * Android only
+	 * 初始化JPush 必须先初始化才能执行其他操作
+	*/
+	static initPush() {
+		JPushModule.initPush();
 	}
 
+	static stopPush() {
+		JPushModule.stopPush();
+	}
 
-} else {
-	log('没有检测到JPush模块，请确认是否已正确链接到项目中。')
-}
+	static resumePush() {
+		JPushModule.resumePush();
+	}
 
+	static getInfo(cb) {
+		JPushModule.getInfo((map) => {
+			cb(map);
+		});
+	}
 
-export default class JPush {
+	/**
+	 * Android 
+	*/
+	static setTag(tag, success, error) {
+		JPushModule.setTag(tag, (resultCode) => {
+			if (resultCode === 0) {
+				success;
+			} else {
+				error;
+			}
+		});
+	}
+	
+	/**
+	 * Android 
+	*/
+	static setAlias(alias, success, error) {
+		JPushModule.setAlias(alias, (resultCode) => {
+			if (resultCode === 0) {
+				success;
+			} else {
+				error;
+			}
+		});
+	}
+
+	/**
+	 * Android 
+	*/
+	static addReceiveCustomMsgListener(cb) {
+		listeners[cb] = DeviceEventEmitter.addListener(receiveCustomMsgEvent,
+			(message) => {
+				cb(message);
+			});
+	}
+
+	/**
+	 * Android 
+	*/
+	static removeReceiveCustomMsgListener(cb) {
+		if (!listeners[cb]) {
+				return;
+			}
+			listeners[cb].remove();
+			listeners[cb] = null;
+	}
+
+	/**
+	 * Android 
+	*/
+	static addReceiveNotificationListener(cb) {
+ 		listeners[cb] = DeviceEventEmitter.addListener(receiveNotificationEvent,
+ 			(message) => {
+ 				cb(message);
+ 			});
+ 	}
+ 
+ 	/**
+	 * Android 
+	*/
+ 	static removeReceiveNotificationListener(cb) {
+ 		if (!listeners[cb]) {
+ 			return;
+ 		}
+ 		listeners[cb].remove();
+ 		listeners[cb] = null;
+ 	}
+
+ 	static getRegistrationID(cb) {
+ 		JPushModule.getRegistrationID((id) => {
+ 			cb(id);
+ 		});
+ 	}
 
 	static setupPush() {
 		JPushModule.setupPush;
@@ -153,9 +179,7 @@ export default class JPush {
         // this.setState({ connectStatus: '已登陆' });
         // });
 
-     static setBadge(badge, cb)
+     static setBadge(badge, cb){
 
-
+     }
 }
-
-export default JPush;

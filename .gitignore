@@ -5,4 +5,4 @@ build/
 build-res/
 /*/build/
 *.iml
-.idea
+.idea/

@@ -61,17 +61,11 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initPush(Callback successCallback, Callback errorCallback) {
-        try {
-            mContext = getCurrentActivity();
-            JPushInterface.init(getReactApplicationContext());
-            Toast.makeText(mContext, "Init push success", Toast.LENGTH_SHORT).show();
-            successCallback.invoke("init Success!");
-            Log.i("PushSDK", "init Success !");
-        } catch (Exception e) {
-            errorCallback.invoke(e.getMessage());
-        }
-
+    public void initPush() {
+        mContext = getCurrentActivity();
+        JPushInterface.init(getReactApplicationContext());
+        Toast.makeText(mContext, "Init push success", Toast.LENGTH_SHORT).show();
+        Log.i("PushSDK", "init Success !");
     }
 
     @ReactMethod
@@ -91,29 +85,19 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void stopPush(Callback successCallback, Callback errorCallback) {
-        try {
-            mContext = getCurrentActivity();
-            JPushInterface.stopPush(getReactApplicationContext());
-            Log.i("PushSDK", "stop push");
-            Toast.makeText(mContext, "Stop push success", Toast.LENGTH_SHORT).show();
-            successCallback.invoke("stop push success!");
-        } catch (Exception e) {
-            errorCallback.invoke(e.getMessage());
-        }
+    public void stopPush() {
+        mContext = getCurrentActivity();
+        JPushInterface.stopPush(getReactApplicationContext());
+        Log.i("PushSDK", "stop push");
+        Toast.makeText(mContext, "Stop push success", Toast.LENGTH_SHORT).show();
     }
 
     @ReactMethod
-    public void resumePush(Callback successCallback, Callback errorCallback) {
-        try {
-            mContext = getCurrentActivity();
-            JPushInterface.resumePush(getReactApplicationContext());
-            Log.i("PushSDK", "resume push");
-            Toast.makeText(mContext, "Resume push success", Toast.LENGTH_SHORT).show();
-            successCallback.invoke("resume push success!");
-        } catch (Exception e) {
-            errorCallback.invoke(e.getMessage());
-        }
+    public void resumePush() {
+        mContext = getCurrentActivity();
+        JPushInterface.resumePush(getReactApplicationContext());
+        Log.i("PushSDK", "resume push");
+        Toast.makeText(mContext, "Resume push success", Toast.LENGTH_SHORT).show();
     }
 
     //为用户设置Tag,可以在服务端根据Tag推送消息
@@ -145,7 +129,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                                     Log.i(TAG, "Set tag success. tag: " + tag);
                                     Toast.makeText(getReactApplicationContext(),
                                             "Set tag success", Toast.LENGTH_SHORT).show();
-                                    callback.invoke("Set tag success. tag: " + tag);
+                                    callback.invoke(0);
                                     break;
                                 case 6002:
                                     Log.i(TAG, "Set tag timeout");
@@ -237,6 +221,11 @@ public class JPushModule extends ReactContextBaseJavaModule {
         mContext = getCurrentActivity();
         String id = JPushInterface.getRegistrationID(mContext);
         callback.invoke(id);
+    }
+
+    @ReactMethod
+    public void clearAllNotifications() {
+        JPushInterface.clearAllNotifications(getReactApplicationContext());
     }
 
     public static class JPushReceiver extends BroadcastReceiver {

@@ -1,6 +1,6 @@
 {
 	"name": "jpush-for-react-native",
-	"version": "0.2.6",
+	"version": "0.2.7",
 	"description": "a jpush plugin for react native application",
 	"main": "index.js",
 	"scripts": {
@@ -20,6 +20,5 @@
 	"bugs": {
 		"url": "https://github.com/KenChoi1992/react-native-jpush/issues"
 	},
-	"homepage": "https://github.com/KenChoi1992/react-native-jpush#readme",
-	"typings": "index.d.ts"
+	"homepage": "https://github.com/KenChoi1992/react-native-jpush#readme"
 }
