@@ -96,9 +96,66 @@ if (JPushModule) {
 		}
 
 	}
+
+
 } else {
 	log('没有检测到JPush模块，请确认是否已正确链接到项目中。')
 }
 
+
+export default class JPush {
+
+	static setupPush() {
+		JPushModule.setupPush;
+	}
+
+
+     static getAppkeyWithcallback(cb) {
+     	JPushModule.getAppkeyWithcallback((appkey) => {
+     		cb(appkey);
+     	});
+     }
+
+     static setTag(tag, success, fail) {
+     	JPushModule.setTags(tag, null, (resultCode) => {
+     		if (resultCode == 0) {
+     			success;
+     		} else {
+     			fail;
+     		}
+     	});
+     }
+
+     static setAlias(alias, success, fail) {
+     	JPushModule.setTags(null, alias, (resultCode) => {
+     		if (resultCode == 0) {
+     			success;
+     		} else {
+     			fail;
+     		}
+     	})
+     }
+
+  	static addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName) {
+  		JPushModule.addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName);
+  	}
+//  add listener
+        // NativeAppEventEmitter.addListener('networkDidSetup', (token) => {
+        // this.setState({ connectStatus: '已连接' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidClose', (token) => {
+        // this.setState({ connectStatus: '连接已断开' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidRegister', (token) => {
+        // this.setState({ connectStatus: '已注册' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidLogin', (token) => {
+        // this.setState({ connectStatus: '已登陆' });
+        // });
+
+     static setBadge(badge, cb)
+
+
+}
 
 export default JPush;
