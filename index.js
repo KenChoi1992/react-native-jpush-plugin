@@ -43,14 +43,23 @@ export default class JPush {
 		JPushModule.initPush();
 	}
 
+	/**
+	 * Android 
+	*/
 	static stopPush() {
 		JPushModule.stopPush();
 	}
 
+	/**
+	 * Android 
+	*/
 	static resumePush() {
 		JPushModule.resumePush();
 	}
 
+	/**
+	 * Android 
+	*/
 	static getInfo(cb) {
 		JPushModule.getInfo((map) => {
 			cb(map);
