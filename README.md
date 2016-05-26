@@ -5,9 +5,9 @@
 - 使用命令行在你的React Native Project目录中安装：
 
 ```
-npm install jpush-for-react-native --save
+npm install jpush-react-native --save
 
-rnpm link jpush-for-react-native
+rnpm link jpush-react-native
 ```
 
 - 使用Android Studio import你的React Native应用（选择你的React Native应用所在目录下的android文件夹即可）
@@ -17,8 +17,8 @@ rnpm link jpush-for-react-native
 > setting.gradle
 
 ```
-include ':app', ':jpush-for-react-native'
-project(':jpush-for-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jpush-for-react-native/android')
+include ':app', ':jpush-react-native'
+project(':jpush-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jpush-react-native/android')
 
 ```
 
@@ -29,18 +29,18 @@ project(':jpush-for-react-native').projectDir = new File(rootProject.projectDir,
 ```
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile project(':jpush-for-react-native')
+    compile project(':jpush-react-native')
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 ```
 
-- 现在重新sync一下项目，应该能看到jpush-for-react-native作为一个android Library项目导进来了
+- 现在重新sync一下项目，应该能看到jpush-react-native作为一个android Library项目导进来了
 
 ![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin1.png)
 
-- 打开jpush-for-react-native的build.gradle文件，修改相关配置：
+- 打开jpush-react-native的build.gradle文件，修改相关配置：
 
-> jpush-for-react-native/android/build.gradle
+> jpush-react-native/android/build.gradle
 
 ![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin2.png)
 
@@ -54,7 +54,7 @@ dependencies {
 
 - 在JS中import JPushModule，然后即调用相关方法：
 ```
-import JPushModule from 'jpush-for-react-native';
+import JPushModule from 'jpush-react-native';
 
 ...
 
@@ -73,7 +73,7 @@ componentDidMount() {
   }
 ```
 
-关于JPushModule的具体方法可以参考jpush-for-react-native文件夹下的index.js文件，此处将方法罗列如下：
+关于JPushModule的具体方法可以参考jpush-react-native文件夹下的index.js文件，此处将方法罗列如下：
 
 - initPush()
 - getInfo(map)
