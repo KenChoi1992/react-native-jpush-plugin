@@ -190,7 +190,7 @@ RCT_EXPORT_METHOD( setTags:(NSArray *)tags
   
   self.asyCallback = callback;
   
-  [JPUSHService setTags:tags alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+  [JPUSHService setTags:tagSet alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
     callback(@[@(iResCode)]);
   }];
 }
