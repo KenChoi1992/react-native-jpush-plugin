@@ -102,7 +102,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     //为用户设置Tag,可以在服务端根据Tag推送消息
     @ReactMethod
-    public void setTag(String str, final Callback callback) {
+    public void setTags(String str, final Callback callback) {
         mContext = getCurrentActivity();
         final String tag = str.trim();
         Log.i(TAG, "tag: " + tag);

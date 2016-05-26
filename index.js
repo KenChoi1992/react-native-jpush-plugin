@@ -92,6 +92,20 @@ export default class JPush {
 	/**
 	 * Android 
 	*/
+	static setStyleBasic() {
+		JPushModule.setStyleBasic();
+	}
+
+	/**
+	 * Android 
+	*/
+	static setStyleCustom() {
+		JPushModule.setStyleCustom();
+	}
+
+	/**
+	 * Android 
+	*/
 	static addReceiveCustomMsgListener(cb) {
 		listeners[cb] = DeviceEventEmitter.addListener(receiveCustomMsgEvent,
 			(message) => {
