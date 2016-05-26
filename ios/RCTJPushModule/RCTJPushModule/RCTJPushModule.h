@@ -10,10 +10,6 @@
 #import "RCTBridgeModule.h"
 #import "JPUSHService.h"
 
-static NSString *appKey = @"";
-static NSString *channel = @"";
-static BOOL isProduction = false;
-
 @interface RCTJPushModule : NSObject <RCTBridgeModule>
 @property(strong,nonatomic)RCTResponseSenderBlock asyCallback;
 
