@@ -103,7 +103,7 @@ JPushModule.getInfo((map) => {
 ####iOS Usage
 - 打开iOS工程，在rnpm link 之后，RCTJPushModule.xcodeproj 工程会自动添加到 Libraries 目录里面
 - 在iOS工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework
-- 在RCTJPushModel.xcodeproj -> RCTJPushModule.h 文件中 填写自己的appkey、channel、和isProduction
+- 在RCTJPushModule.xcodeproj工程 -> RCTJPushModule.h 文件中 填写自己的appkey、channel、和isProduction
 ```
 static NSString *appKey = @"";     //填写appkey
 static NSString *channel = @"";    //填写channel
