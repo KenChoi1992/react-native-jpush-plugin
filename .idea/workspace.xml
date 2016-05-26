@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="41384537-abef-4924-a72b-724a8290c731" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/src/main/java/cn/jpush/reactnativejpush/JPushModule.java" afterPath="$PROJECT_DIR$/android/src/main/java/cn/jpush/reactnativejpush/JPushModule.java" />
     </list>
     <ignored path="react-native-jpush-plugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,7 +39,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
@@ -78,13 +79,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JPushModule.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="JPushModule.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/android/src/main/java/cn/jpush/reactnativejpush/JPushModule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="104" column="23" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="23" />
+            <state relative-caret-position="3794">
+              <caret line="263" column="0" selection-start-line="263" selection-start-column="0" selection-end-line="263" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1415#1416#0" expanded="true" />
+                <element signature="e#1442#1443#0" expanded="true" />
+                <element signature="e#1487#1488#0" expanded="true" />
+                <element signature="e#1523#1524#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -956,6 +961,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1014,6 +1023,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1048,6 +1061,10 @@
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1114,21 +1131,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/android/src/main/java/cn/jpush/reactnativejpush/JPushModule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="104" column="23" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/src/main/java/cn/jpush/reactnativejpush/JPushModule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3794">
+          <caret line="263" column="0" selection-start-line="263" selection-start-column="0" selection-end-line="263" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

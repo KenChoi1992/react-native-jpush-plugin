@@ -15,6 +15,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
@@ -102,19 +103,17 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     //为用户设置Tag,可以在服务端根据Tag推送消息
     @ReactMethod
-    public void setTags(String str, final Callback callback) {
+    public void setTags(final ReadableArray strArray, final Callback callback) {
         mContext = getCurrentActivity();
-        final String tag = str.trim();
-        Log.i(TAG, "tag: " + tag);
-        if (!TextUtils.isEmpty(tag)) {
-            String[] sArray = tag.split(",");
+        Log.i(TAG, "tag: " + strArray.toString());
+        if (strArray.size() > 0) {
             Set<String> tagSet = new LinkedHashSet<>();
-            for (String tagItem : sArray) {
-                if (!ExampleUtil.isValidTagAndAlias(tagItem)) {
+            for (int i = 0; i < strArray.size(); i++) {
+                if (!ExampleUtil.isValidTagAndAlias(strArray.getString(i))) {
                     Toast.makeText(mContext, "Invalid tag !", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                tagSet.add(tagItem);
+                tagSet.add(strArray.getString(i));
             }
             final ProgressDialog dialog = new ProgressDialog(mContext);
             dialog.setMessage("Loading");
@@ -126,7 +125,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                             dialog.dismiss();
                             switch (status) {
                                 case 0:
-                                    Log.i(TAG, "Set tag success. tag: " + tag);
+                                    Log.i(TAG, "Set tag success. tag: " + strArray.toString());
                                     Toast.makeText(getReactApplicationContext(),
                                             "Set tag success", Toast.LENGTH_SHORT).show();
                                     callback.invoke(0);
