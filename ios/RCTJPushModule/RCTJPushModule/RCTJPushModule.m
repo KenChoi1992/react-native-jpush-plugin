@@ -5,7 +5,6 @@
 //  Created by oshumini on 16/3/14.
 //  Copyright © 2016年 Facebook. All rights reserved.
 //
-#import "JPUSHService.h"
 #import "RCTJPushModule.h"
 #import "RCTEventDispatcher.h"
 #import "RCTRootView.h"

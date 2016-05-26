@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "RCTBridgeModule.h"
+#import "JPUSHService.h"
 
-static NSString *appKey = @"9df4a9fe21c5737234418d8f";
+static NSString *appKey = @"";
 static NSString *channel = @"";
 static BOOL isProduction = false;
 
