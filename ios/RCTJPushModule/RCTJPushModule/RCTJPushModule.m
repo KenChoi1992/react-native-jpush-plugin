@@ -179,7 +179,7 @@ RCT_EXPORT_METHOD(handleRemoteNotification:(NSDictionary *)remoteInfo) {
 /*!
  * 设置 tags 的方法
  */
-RCT_EXPORT_METHOD( setTag:(NSArray *)tags
+RCT_EXPORT_METHOD( setTags:(NSArray *)tags
                   callback:(RCTResponseSenderBlock)callback) {
   
   NSSet *tagSet;

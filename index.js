@@ -57,8 +57,8 @@ export default class JPush {
 		});
 	}
 
-	static setTag(tag, success, fail) {
-		JPushModule.setTag(tag, (resultCode) => {
+	static setTags(tag, success, fail) {
+		JPushModule.setTags(tag, (resultCode) => {
 
 			if (resultCode === 0) {
 				console.log('success');
@@ -159,8 +159,8 @@ export default class JPush {
 	 * iOS
 	*/
      static setBadge(badge, cb){
-     	JPushModule.setBadge(badge, () => {
-
+     	JPushModule.setBadge(badge, (value) => {
+     		cb(value);
      	});
      }
 
