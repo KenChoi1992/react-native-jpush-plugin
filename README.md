@@ -101,8 +101,36 @@ JPushModule.getInfo((map) => {
 
 
 ####iOS Usage
-- 在工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework
-- JPushModule 类中定义了react调用原生JPush方法的接口
+- 打开iOS工程，在rnpm link 之后，RCTJPushModule.xcodeproj 工程会自动添加到 Libraries 目录里面
+- 在iOS工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework
+- 在RCTJPushModel.xcodeproj -> RCTJPushModule.h 文件中 填写自己的appkey、channel、和isProduction
+```
+static NSString *appKey = @"";     //填写appkey
+static NSString *channel = @"";    //填写channel
+static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
+```
+- 在AppDelegate.m 的didFinishLaunchingWithOptions 方法里面添加如下代码
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+    //可以添加自定义categories
+    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                      UIUserNotificationTypeSound |
+                                                      UIUserNotificationTypeAlert)
+                                          categories:nil];
+  } else {
+    //iOS 8以前 categories 必须为nil
+    [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                      UIRemoteNotificationTypeSound |
+                                                      UIRemoteNotificationTypeAlert)
+                                          categories:nil];
+  }
+  
+  [JPUSHService setupWithOption:launchOptions appKey:appKey
+                        channel:channel apsForProduction:isProduction];
+}
+```
 - 在AppDelegate.m 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示
 ```
 - (void)application:(UIApplication *)application
