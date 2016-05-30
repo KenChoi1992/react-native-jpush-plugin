@@ -1,0 +1,93 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/node',
+1 verbose cli   '/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'jpush-for-react-native',
+1 verbose cli   '--save' ]
+2 info using npm@3.8.9
+3 info using node@v6.2.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData jpush-for-react-native
+8 silly fetchNamedPackageData jpush-for-react-native
+9 silly mapToRegistry name jpush-for-react-native
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry http://192.168.6.252:18011/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'jpush-for-react-native',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   name: 'jpush-for-react-native',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri http://192.168.6.252:18011/jpush-for-react-native
+14 verbose request uri http://192.168.6.252:18011/jpush-for-react-native
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 15:40:53
+17 verbose request id 18602fad511a09aa
+18 http request GET http://192.168.6.252:18011/jpush-for-react-native
+19 http 400 http://192.168.6.252:18011/jpush-for-react-native
+20 verbose bad json Invalid header received from client.
+21 error registry error parsing json
+22 verbose headers { 'proxy-agent': 'Privoxy 3.0.21',
+22 verbose headers   'content-type': 'text/plain',
+22 verbose headers   connection: 'close' }
+23 silly get cb [ 400,
+23 silly get   { 'proxy-agent': 'Privoxy 3.0.21',
+23 silly get     'content-type': 'text/plain',
+23 silly get     connection: 'close' } ]
+24 silly fetchPackageMetaData SyntaxError: Unexpected token I in JSON at position 0
+24 silly fetchPackageMetaData Invalid header received from client.
+24 silly fetchPackageMetaData
+24 silly fetchPackageMetaData     at Object.parse (native)
+24 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:199:23)
+24 silly fetchPackageMetaData     at Request._callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+24 silly fetchPackageMetaData     at Request.self.callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:200:22)
+24 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+24 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+24 silly fetchPackageMetaData     at Request.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+24 silly fetchPackageMetaData     at emitOne (events.js:101:20)
+24 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+24 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:988:12)
+24 silly fetchPackageMetaData  error for jpush-for-react-native SyntaxError: Unexpected token I in JSON at position 0
+24 silly fetchPackageMetaData Invalid header received from client.
+24 silly fetchPackageMetaData
+24 silly fetchPackageMetaData     at Object.parse (native)
+24 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:199:23)
+24 silly fetchPackageMetaData     at Request._callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+24 silly fetchPackageMetaData     at Request.self.callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:200:22)
+24 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+24 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+24 silly fetchPackageMetaData     at Request.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+24 silly fetchPackageMetaData     at emitOne (events.js:101:20)
+24 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+24 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:988:12)
+25 silly rollbackFailedOptional Starting
+26 silly rollbackFailedOptional Finishing
+27 silly runTopLevelLifecycles Starting
+28 silly runTopLevelLifecycles Finishing
+29 silly install printInstalled
+30 verbose stack SyntaxError: Unexpected token I in JSON at position 0
+30 verbose stack Invalid header received from client.
+30 verbose stack
+30 verbose stack     at Object.parse (native)
+30 verbose stack     at CachingRegistryClient.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:199:23)
+30 verbose stack     at Request._callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+30 verbose stack     at Request.self.callback (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:200:22)
+30 verbose stack     at emitTwo (events.js:106:13)
+30 verbose stack     at Request.emit (events.js:191:7)
+30 verbose stack     at Request.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+30 verbose stack     at emitOne (events.js:101:20)
+30 verbose stack     at Request.emit (events.js:188:7)
+30 verbose stack     at IncomingMessage.<anonymous> (/Users/HuminiOS/.nvm/versions/node/v6.2.0/lib/node_modules/npm/node_modules/request/request.js:988:12)
+31 verbose cwd /Users/HuminiOS/Desktop/workproject/react-native-jpush-plugin
+32 error Darwin 15.0.0
+33 error argv "/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/node" "/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/npm" "install" "jpush-for-react-native" "--save"
+34 error node v6.2.0
+35 error npm  v3.8.9
+36 error Unexpected token I in JSON at position 0
+36 error Invalid header received from client.
+37 error If you need help, you may report this error at:
+37 error     <https://github.com/npm/npm/issues>
+38 verbose exit [ 1, true ]

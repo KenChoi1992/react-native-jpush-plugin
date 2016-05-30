@@ -52,28 +52,28 @@ RCT_EXPORT_MODULE();
   return self;
 }
 
-RCT_EXPORT_METHOD(setupPush:(NSString *)name) {
-  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-    //可以添加自定义categories
-    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                      UIUserNotificationTypeSound |
-                                                      UIUserNotificationTypeAlert)
-                                          categories:nil];
-  } else {
-    //categories 必须为nil
-    [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                      UIRemoteNotificationTypeSound |
-                                                      UIRemoteNotificationTypeAlert)
-                                          categories:nil];
-  }
-  
-  [JPUSHService setupWithOption:nil appKey:appKey
-                        channel:channel apsForProduction:isProduction];
-}
+//RCT_EXPORT_METHOD(setupPush:(NSString *)name) {
+//  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+//    //可以添加自定义categories
+//    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+//                                                      UIUserNotificationTypeSound |
+//                                                      UIUserNotificationTypeAlert)
+//                                          categories:nil];
+//  } else {
+//    //categories 必须为nil
+//    [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+//                                                      UIRemoteNotificationTypeSound |
+//                                                      UIRemoteNotificationTypeAlert)
+//                                          categories:nil];
+//  }
+//
+//  [JPUSHService setupWithOption:nil appKey:appKey
+//                        channel:channel apsForProduction:isProduction];
+//}
 
-RCT_EXPORT_METHOD(getAppkeyWithcallback:(RCTResponseSenderBlock)callback) {
-  callback(@[appKey]);
-}
+//RCT_EXPORT_METHOD(getAppkeyWithcallback:(RCTResponseSenderBlock)callback) {
+////  callback(@[appKey]);
+//}
 
 - (void)networkDidSetup:(NSNotification *)notification {
   [self.bridge.eventDispatcher sendAppEventWithName:@"networkDidSetup"
@@ -418,8 +418,8 @@ RCT_EXPORT_METHOD(resetBadge) {
  *
  * 更多的理解请参考 JPush 的文档网站.
  */
-RCT_EXPORT_METHOD(registrationIDWithcallback:(RCTResponseSenderBlock)callback) {// -> string
-  
+RCT_EXPORT_METHOD(getRegistrationID:(RCTResponseSenderBlock)callback) {// -> string
+  NSLog(@"%@",[JPUSHService registrationID]);
   callback(@[[JPUSHService registrationID]]);
 }
 

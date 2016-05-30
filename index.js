@@ -174,8 +174,8 @@ export default class JPush {
  	/**
 	 * iOS
 	*/
-  	static addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName) {
-  		JPushModule.addLocationNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName);
+  	static setLocalNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName) {
+  		JPushModule.setLocalNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName);
   	}
 
  	/**
