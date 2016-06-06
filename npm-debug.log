@@ -1,0 +1,188 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/node',
+1 verbose cli   '/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@3.8.9
+3 info using node@v6.2.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/HuminiOS/Desktop/workproject/react-native-jpush-plugin',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/HuminiOS/.npm correctMkdir not in flight; initializing
+10 info lifecycle react-native-jpush-plugin@0.1.3~prepublish: react-native-jpush-plugin@0.1.3
+11 silly lifecycle react-native-jpush-plugin@0.1.3~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package.tgz',
+12 verbose tar pack   '/Users/HuminiOS/Desktop/workproject/react-native-jpush-plugin' ]
+13 verbose tarball /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package.tgz
+14 verbose folder /Users/HuminiOS/Desktop/workproject/react-native-jpush-plugin
+15 verbose addLocalTarball adding from inside cache /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package.tgz
+16 verbose correctMkdir /Users/HuminiOS/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd react-native-jpush-plugin@0.1.3
+18 verbose afterAdd /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/HuminiOS/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package/package.json written
+21 silly publish { name: 'react-native-jpush-plugin',
+21 silly publish   version: '0.1.3',
+21 silly publish   description: 'a jpush plugin for react native application',
+21 silly publish   main: 'index.js',
+21 silly publish   scripts: { install: 'node JPushConfiguration.js' },
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/KenChoi1992/react-native-jpush.git' },
+21 silly publish   keywords: [ 'react', 'native', 'jpush' ],
+21 silly publish   author: { name: 'KenChoi' },
+21 silly publish   license: 'ISC',
+21 silly publish   bugs: { url: 'https://github.com/KenChoi1992/react-native-jpush/issues' },
+21 silly publish   homepage: 'https://github.com/KenChoi1992/react-native-jpush#readme',
+21 silly publish   readme: '# react-native-jpush-plugin\n\n###Android Usage\n\n- 使用命令行在你的React Native Project目录中安装：\n\n```\nnpm install jpush-react-native --save\n\nrnpm link jpush-react-native\n```\n\n- 使用Android Studio import你的React Native应用（选择你的React Native应用所在目录下的android文件夹即可）\n\n- 修改android项目下的setting.gradle配置：\n\n> setting.gradle\n\n```\ninclude \':app\', \':jpush-react-native\'\nproject(\':jpush-react-native\').projectDir = new File(rootProject.projectDir, \'../node_modules/jpush-react-native/android\')\n\n```\n\n- 修改app下的build.gradle配置：\n\n> your react native project/android/app/build.gradle\n\n```\ndependencies {\n    compile fileTree(dir: "libs", include: ["*.jar"])\n    compile project(\':jpush-react-native\')\n    compile "com.facebook.react:react-native:+"  // From node_modules\n}\n```\n\n- 现在重新sync一下项目，应该能看到jpush-react-native作为一个android Library项目导进来了\n\n![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin1.png)\n\n- 打开jpush-react-native的build.gradle文件，修改相关配置：\n\n> jpush-react-native/android/build.gradle\n\n![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin2.png)\n\n将此处的yourAppKey替换成你在官网上申请的应用的AppKey\n\n- 打开app下的MainActivity，在ReactInstanceManager的build方法中加入JPushPackage：\n\n> app/MainActivity.java\n\n![](https://github.com/KenChoi1992/SomeArticles/blob/master/screenshots/plugin3.png)\n\n- 在JS中import JPushModule，然后即调用相关方法：\n```\nimport JPushModule from \'jpush-react-native\';\n\n...\n\ncomponentDidMount() {\n    JPushModule.addReceiveCustomMsgListener((message) => {\n      this.setState({pushMsg: message});\n    });\n    JPushModule.addReceiveNotificationListener((message) => {\n      console.log("receive notification: " + message);\n    })\n  }\n\n  componentWillUnmount() {\n    JPushModule.removeReceiveCustomMsgListener();\n    JPushModule.removeReceiveNotificationListener();\n  }\n```\n\n关于JPushModule的具体方法可以参考jpush-react-native文件夹下的index.js文件，此处将方法罗列如下：\n\n- initPush()\n- getInfo(map)\n```\nJPushModule.getInfo((map) => {\n      this.setState({\n            appkey: map.myAppKey,\n            imei: map.myImei,\n            package: map.myPackageName,\n            deviceId: map.myDeviceId,\n            version: map.myVersion\n      });\n    });\n```\n- stopPush()\n- resumePush()\n- setTag(tag)\n- setAlias(alias)\n- setStyleBasic()\n- setStyleCustom()\n- addReceiveCustomMsgListener(callback)\n- removeReceiveCustomMsgListener()\n- addReceiveNotificationListener()\n- removeReceiveNotificationListener()\n\n\n####iOS Usage\n- 打开iOS工程，在rnpm link 之后，RCTJPushModule.xcodeproj 工程会自动添加到 Libraries 目录里面\n- 在iOS工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework\n- 在AppDelegate.h 文件中 填写如下代码，这里的的appkey、channel、和isProduction填写自己的\n```\nstatic NSString *appKey = @"";     //填写appkey\nstatic NSString *channel = @"";    //填写channel   一般为nil\nstatic BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true\n```\n- 在AppDelegate.m 的didFinishLaunchingWithOptions 方法里面添加如下代码\n```\n- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions\n{\nif ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {\n    //可以添加自定义categories\n    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |\n                                                      UIUserNotificationTypeSound |\n                                                      UIUserNotificationTypeAlert)\n                                          categories:nil];\n  } else {\n    //iOS 8以前 categories 必须为nil\n    [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |\n                                                      UIRemoteNotificationTypeSound |\n                                                      UIRemoteNotificationTypeAlert)\n                                          categories:nil];\n  }\n  \n  [JPUSHService setupWithOption:launchOptions appKey:appKey\n                        channel:channel apsForProduction:isProduction];\n}\n```\n- 在AppDelegate.m 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示\n```\n- (void)application:(UIApplication *)application\ndidRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {\n  [JPUSHService registerDeviceToken:deviceToken];\n}\n```\n---\n贡献者列表\n- [bang88](https://github.com/bang88)\n\n\n\n\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: 'e55f0b3ac05b3481fdef2a4f6e2e024728e2472d',
+21 silly publish   _id: 'react-native-jpush-plugin@0.1.3',
+21 silly publish   _shasum: 'a62dd0da3cbd6266f18bb84c61f16ad63f6ad6b2',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name react-native-jpush-plugin
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry http://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'react-native-jpush-plugin',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   name: 'react-native-jpush-plugin',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri http://registry.npmjs.org/react-native-jpush-plugin
+28 verbose publish registryBase http://registry.npmjs.org/
+29 silly publish uploading /Users/HuminiOS/.npm/react-native-jpush-plugin/0.1.3/package.tgz
+30 verbose request uri http://registry.npmjs.org/react-native-jpush-plugin
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 10:32:55
+33 verbose request using bearer token for auth
+34 verbose request id 90fa81156d6cb81f
+35 http request PUT http://registry.npmjs.org/react-native-jpush-plugin
+36 http 503 http://registry.npmjs.org/react-native-jpush-plugin
+37 verbose bad json <?xml version="1.0" encoding="utf-8"?>
+37 verbose bad json <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+37 verbose bad json  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+37 verbose bad json <html>
+37 verbose bad json   <head>
+37 verbose bad json     <title>503 backend write error</title>
+37 verbose bad json   </head>
+37 verbose bad json   <body>
+37 verbose bad json     <h1>Error 503 backend write error</h1>
+37 verbose bad json     <p>backend write error</p>
+37 verbose bad json     <h3>Guru Mediation:</h3>
+37 verbose bad json     <p>Details: cache-lcy1122-LCY 1465180494 3697032165</p>
+37 verbose bad json     <hr>
+37 verbose bad json     <p>Varnish cache server</p>
+37 verbose bad json   </body>
+37 verbose bad json </html>
+38 error registry error parsing json
+39 verbose headers { server: 'Varnish',
+39 verbose headers   'retry-after': '0',
+39 verbose headers   'content-type': 'text/html; charset=utf-8',
+39 verbose headers   'content-length': '451',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   date: 'Mon, 06 Jun 2016 02:34:54 GMT',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   connection: 'close',
+39 verbose headers   'x-served-by': 'cache-lcy1122-LCY',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1465180372.811526,VS0,VE121507' }
+40 info retry will retry, error on last attempt: SyntaxError: Unexpected token < in JSON at position 1
+40 info retry
+40 info retry <?xml version="1.0" encoding="utf-8"?>
+40 info retry <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+40 info retry  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+40 info retry <html>
+40 info retry   <head>
+40 info retry     <title>503 backend write error</title>
+40 info retry   </head>
+40 info retry   <body>
+40 info retry     <h1>Error 503 backend write error</h1>
+40 info retry     <p>backend write error</p>
+40 info retry     <h3>Guru Mediation:</h3>
+40 info retry     <p>Details: cache-lcy1122-LCY 1465180494 3697032165</p>
+40 info retry     <hr>
+40 info retry     <p>Varnish cache server</p>
+40 info retry   </body>
+40 info retry </html>
+41 info attempt registry request try #2 at 10:35:09
+42 verbose request using bearer token for auth
+43 http request PUT http://registry.npmjs.org/react-native-jpush-plugin
+44 http 503 http://registry.npmjs.org/react-native-jpush-plugin
+45 verbose bad json <?xml version="1.0" encoding="utf-8"?>
+45 verbose bad json <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+45 verbose bad json  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+45 verbose bad json <html>
+45 verbose bad json   <head>
+45 verbose bad json     <title>503 backend write error</title>
+45 verbose bad json   </head>
+45 verbose bad json   <body>
+45 verbose bad json     <h1>Error 503 backend write error</h1>
+45 verbose bad json     <p>backend write error</p>
+45 verbose bad json     <h3>Guru Mediation:</h3>
+45 verbose bad json     <p>Details: cache-lcy1132-LCY 1465180626 1380476232</p>
+45 verbose bad json     <hr>
+45 verbose bad json     <p>Varnish cache server</p>
+45 verbose bad json   </body>
+45 verbose bad json </html>
+46 error registry error parsing json
+47 verbose headers { server: 'Varnish',
+47 verbose headers   'retry-after': '0',
+47 verbose headers   'content-type': 'text/html; charset=utf-8',
+47 verbose headers   'content-length': '451',
+47 verbose headers   'accept-ranges': 'bytes',
+47 verbose headers   date: 'Mon, 06 Jun 2016 02:37:06 GMT',
+47 verbose headers   via: '1.1 varnish',
+47 verbose headers   connection: 'close',
+47 verbose headers   'x-served-by': 'cache-lcy1132-LCY',
+47 verbose headers   'x-cache': 'MISS',
+47 verbose headers   'x-cache-hits': '0',
+47 verbose headers   'x-timer': 'S1465180506.256906,VS0,VE120578' }
+48 info retry will retry, error on last attempt: SyntaxError: Unexpected token < in JSON at position 1
+48 info retry
+48 info retry <?xml version="1.0" encoding="utf-8"?>
+48 info retry <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+48 info retry  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+48 info retry <html>
+48 info retry   <head>
+48 info retry     <title>503 backend write error</title>
+48 info retry   </head>
+48 info retry   <body>
+48 info retry     <h1>Error 503 backend write error</h1>
+48 info retry     <p>backend write error</p>
+48 info retry     <h3>Guru Mediation:</h3>
+48 info retry     <p>Details: cache-lcy1132-LCY 1465180626 1380476232</p>
+48 info retry     <hr>
+48 info retry     <p>Varnish cache server</p>
+48 info retry   </body>
+48 info retry </html>
+49 info attempt registry request try #3 at 10:38:11
+50 verbose request using bearer token for auth
+51 http request PUT http://registry.npmjs.org/react-native-jpush-plugin
+52 verbose request invalidating /Users/HuminiOS/.npm/registry.npmjs.org/react-native-jpush-plugin on PUT
+53 error publish Failed PUT undefined
+54 verbose stack Error: write EPIPE
+54 verbose stack     at exports._errnoException (util.js:953:11)
+54 verbose stack     at WriteWrap.afterWrite (net.js:793:14)
+55 verbose cwd /Users/HuminiOS/Desktop/workproject/react-native-jpush-plugin
+56 error Darwin 15.0.0
+57 error argv "/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/node" "/Users/HuminiOS/.nvm/versions/node/v6.2.0/bin/npm" "publish"
+58 error node v6.2.0
+59 error npm  v3.8.9
+60 error code EPIPE
+61 error errno EPIPE
+62 error syscall write
+63 error write EPIPE
+64 error If you need help, you may report this error at:
+64 error     <https://github.com/npm/npm/issues>
+65 verbose exit [ 1, true ]
