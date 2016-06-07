@@ -126,7 +126,7 @@ function isDir(path){
 
 
 //  深度遍历所有文件，  
-getAllfiles("./",function (f, s) {
+getAllfiles("./ios",function (f, s) {
   var isAppdelegate = f.match(/AppDelegate\.m/);
   // 找到Appdelegate.m 文件 插入代码
   if (isAppdelegate != null) {  
@@ -140,6 +140,30 @@ getAllfiles("./",function (f, s) {
   	console.log("the file is iOS project file:"+f);
   	projectConfiguration(f);
   }
+});
+
+getGradleFile("./node_modules/jpush-react-native", function (f, s) {
+	var isBuildGradle = f.match(/build\.gradle/);
+	if (isBuildGradle != null) {
+		console.log("find gradle file in jpush plugin " + f);
+		configureAppkey(f);
+	} 
+});
+
+getConfigureFiles("./android", function (f, s) {
+	//找到settings.gradle
+	var isSettingGradle = f.match(/settings\.gradle/);
+	if (isSettingGradle != null) {
+		console.log("find settings.gradle in android project " + f);
+		configureSetting(f);
+	}
+
+	//找到project下的build.gradle
+	var isProjectGradle = f.match(/.*\/build\.gradle/);
+	if (isProjectGradle != null) {
+		console.log("find build.gradle in android project " + f);
+		configureGradle(f);
+	}
 });
 // getAllfiles("./",function(f,s){
 //   console.log(f);
@@ -177,3 +201,73 @@ function fullPath (dir, files) {
   });
 }
 
+
+
+// android
+function getGradleFile(dir, findOne) {
+	if (typeof findOne !== 'function') {
+		throw new TypeError('The argument "findOne" must be a function');
+	}
+
+	eachFileSync(spath.resolve(dir), findOne);
+
+}
+
+function getConfigureFiles(dir, findOne) {
+	if (typeof findOne !== 'function') {
+		throw new TypeError('The argument "findOne" must be a function');
+	}
+
+	eachFileSync(spath.resolve(dir), findOne);
+}
+
+function configureAppkey(path) {
+	if (isFile(path) == false) {
+		console.log("configuration JPush error!!");
+		return;
+	}
+
+	var rf = fs.readFileSync(path, "utf-8");
+	var searchAppkey = rf.match(/\n.*JPUSH_APPKEY\:/);
+	if (searchAppkey != null) {
+		rf = rf.replace(searchAppkey[0], searchAppkey[0] + "\"" + appKey + "\"");
+		fs.writeFileSync(path, rf, "utf-8");
+	} else {
+		console.log("Did not find JPUSH_APPKEY in path: " + path);
+		console.log(rf);
+	}
+}
+
+function configureSetting(path) {
+	if (isFile(path) == false) {
+		console.log("configuration JPush error!!");
+		return;
+	}
+
+	var rf = fs.readFileSync(path, "utf-8");
+	var searchKey = rf.match(/\n.*include.*\n/);
+	if (searchKey != null) {
+		rf = rf.replace(searchKey[0], searchKey[0] + "\,\'\:jpush-react-native\'\nproject\(\'\:jpush-react-native\'\)\.projectDir = new File\(rootProject\.projectDir\, \'\.\.\/node_modules\/jpush-react-native\/android\'\n" );
+		fs.writeFileSync(path, rf, "utf-8");
+	} else {
+		console.log("Did not find include in path: " + path);
+		console.log(rf);
+	}
+}
+
+function configureGradle(path) {
+	if (isFile(path) == false) {
+		console.log("configuration JPush error!!");
+		return;
+	}
+
+	var rf = fs.readdirSync(path, "utf-8");
+	var searchKey = rf.match(/\n.*compile fileTree.*\n/);
+	if (searchKey != null) {
+		rf = rf.replace(searchKey[0], searchKey[0] + "\ncompile project\(\'\:jpush-react-native\'\)\n");
+		fs.writeFileSync(path, rf, "utf-8");
+	} else {
+		console.log("Did not find compile in path: " + path);
+		console.log(rf);
+	}
+}
