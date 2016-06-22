@@ -26,7 +26,7 @@ RCT_EXPORT_MODULE();
 
 - (id)init {
   self = [super init];
-  
+
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(networkDidSetup:)
@@ -48,7 +48,7 @@ RCT_EXPORT_MODULE();
                     selector:@selector(networkDidReceiveMessage:)
                         name:kJPFNetworkDidReceiveMessageNotification
                       object:nil];
-  
+
   return self;
 }
 
@@ -142,7 +142,7 @@ RCT_EXPORT_METHOD(setupWithOption:(NSDictionary *)launchingOption
                   appKey:(NSString *)appKey
                   channel:(NSString *)channel
                   apsForProduction:(BOOL)isProduction) {
-  
+
 }
 
 
@@ -180,15 +180,15 @@ RCT_EXPORT_METHOD(handleRemoteNotification:(NSDictionary *)remoteInfo) {
  */
 RCT_EXPORT_METHOD( setTags:(NSArray *)tags
                   callback:(RCTResponseSenderBlock)callback) {
-  
+
   NSSet *tagSet;
-  
+
   if (tags != NULL) {
     tagSet = [NSSet setWithArray:tags];
   }
-  
+
   self.asyCallback = callback;
-  
+
   [JPUSHService setTags:tagSet alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
     callback(@[@(iResCode)]);
   }];
@@ -199,11 +199,11 @@ RCT_EXPORT_METHOD( setTags:(NSArray *)tags
  */
 RCT_EXPORT_METHOD( setAlias:(NSString *)alias
                   callback:(RCTResponseSenderBlock)callback) {
-  
+
   NSString *aliasString;
-  
+
   self.asyCallback = callback;
-  
+
   [JPUSHService setTags:nil alias:alias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
     callback(@[@(iResCode)]);
   }];
@@ -309,7 +309,7 @@ RCT_EXPORT_METHOD( setLocalNotification:(NSDate *)fireDate
                   identifierKey:(NSString *)notificationKey
                   userInfo:(NSDictionary *)userInfo
                   soundName:(NSString *)soundName) {
-  
+
   [JPUSHService setLocalNotification:fireDate
                            alertBody:alertBody
                                badge:badge
@@ -419,8 +419,15 @@ RCT_EXPORT_METHOD(resetBadge) {
  * 更多的理解请参考 JPush 的文档网站.
  */
 RCT_EXPORT_METHOD(getRegistrationID:(RCTResponseSenderBlock)callback) {// -> string
+  NSString *registrationID = [JPUSHService registrationID];
+
   NSLog(@"%@",[JPUSHService registrationID]);
-  callback(@[[JPUSHService registrationID]]);
+
+  if (registrationID) {
+    callback(@[[JPUSHService registrationID]]);
+  } else {
+    callback(@[@""]);
+  }
 }
 
 /*!
