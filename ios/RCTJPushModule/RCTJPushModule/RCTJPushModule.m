@@ -5,6 +5,7 @@
 //  Created by oshumini on 16/3/14.
 //  Copyright © 2016年 Facebook. All rights reserved.
 //
+#import <UIKit/UIKit.h>
 #import "RCTJPushModule.h"
 #import "RCTEventDispatcher.h"
 #import "RCTRootView.h"
@@ -100,7 +101,7 @@ RCT_EXPORT_MODULE();
 
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
   [self.bridge.eventDispatcher sendAppEventWithName:@"networkDidReceiveMessage"
-                                               body:nil];
+                                               body:notification];
 }
 
 - (void)receiveRemoteNotification:(NSNotification *)notification {
@@ -398,6 +399,7 @@ RCT_EXPORT_METHOD(clearAllLocalNotifications) {
  *   使用 "+1" 的语义, 来表达需要基于目标用户实际的 badge 值(保存的) +1 来下发通知时带上新的 badge 值;
  */
 RCT_EXPORT_METHOD(setBadge:(NSInteger)value callback:(RCTResponseSenderBlock)callback) {// ->Bool
+  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:value];
   NSNumber *badgeNumber = [NSNumber numberWithBool:[JPUSHService setBadge: value]];
   callback(@[badgeNumber]);
 }
@@ -409,6 +411,7 @@ RCT_EXPORT_METHOD(setBadge:(NSInteger)value callback:(RCTResponseSenderBlock)cal
  * 参考 [JPUSHService setBadge:] 说明来理解其作用.
  */
 RCT_EXPORT_METHOD(resetBadge) {
+  [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
   [JPUSHService resetBadge];
 }
 
