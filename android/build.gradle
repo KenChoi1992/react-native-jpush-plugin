@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
-                JPUSH_APPKEY: "0b65c1ad993c61dcd7a9dd7b",	//在此修改JPush的AppKey
+                JPUSH_APPKEY: "yourAppKey",	//在此修改JPush的AppKey
                 APP_CHANNEL: "developer-default"		//应用渠道号
         ]
     }
