@@ -5,6 +5,7 @@ const JPushModule = NativeModules.JPushModule;
 const listeners = {};
 const receiveCustomMsgEvent = "receivePushMsg";
 const receiveNotificationEvent = "receiveNotification";
+const openNotificationEvent = "openNotification";
 
 /**
  * Logs message to console with the [JPush] prefix
@@ -144,6 +145,27 @@ export default class JPush {
  		listeners[cb].remove();
  		listeners[cb] = null;
  	}
+
+ 	/**
+     * Android
+    */
+ 	static addReceiveOpenNotificationListener(cb) {
+     	listeners[cb] = DeviceEventEmitter.addListener(openNotificationEvent,
+     		(message) => {
+     			cb(message);
+     		});
+    }
+
+    /**
+    * Android
+    */
+    static removeReceiveOpenNotificationListener(cb) {
+     	if (!listeners[cb]) {
+     		return;
+     	}
+     	listeners[cb].remove();
+     	listeners[cb] = null;
+    }
 
  	/**
 	 * iOS

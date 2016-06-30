@@ -250,8 +250,8 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 WritableMap map = Arguments.fromBundle(bundle);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("openNotification", map);
-                if (mModule != null && mModule.getCurrentActivity()!=null) {
-                    Intent intent = new Intent(context, mModule.getCurrentActivity().getClass());
+                if (mModule != null && mModule.mContext != null) {
+                    Intent intent = new Intent(context, mModule.mContext.getClass());
                     intent.putExtras(bundle);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
