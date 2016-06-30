@@ -10,6 +10,9 @@
 #import "RCTBridgeModule.h"
 #import "JPUSHService.h"
 
+#define kJPFDidReceiveRemoteNotification  @"kJPFDidReceiveRemoteNotification"
+
+
 @interface RCTJPushModule : NSObject <RCTBridgeModule>
 @property(strong,nonatomic)RCTResponseSenderBlock asyCallback;
 

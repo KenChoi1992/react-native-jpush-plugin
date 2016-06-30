@@ -48,7 +48,10 @@ RCT_EXPORT_MODULE();
                     selector:@selector(networkDidReceiveMessage:)
                         name:kJPFNetworkDidReceiveMessageNotification
                       object:nil];
-  
+  [defaultCenter addObserver:self
+                    selector:@selector(receiveRemoteNotification:)
+                        name:kJPFDidReceiveRemoteNotification
+                      object:nil];
   return self;
 }
 
@@ -99,6 +102,12 @@ RCT_EXPORT_MODULE();
   [self.bridge.eventDispatcher sendAppEventWithName:@"networkDidReceiveMessage"
                                                body:nil];
 }
+
+- (void)receiveRemoteNotification:(NSNotification *)notification {
+  id obj = [notification object];
+  [self.bridge.eventDispatcher sendAppEventWithName:@"ReceiveNotification" body:obj];
+}
+
 
 - (dispatch_queue_t)methodQueue
 {
