@@ -1,11 +1,10 @@
 {
 	"name": "jpush-react-native",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "a jpush plugin for react native application",
 	"main": "index.js",
 	"scripts": {
-		"JPushConfiguration": "node JPushConfiguration.js",
-	    "postinstall": "node node_modules/jpush-react-native/JPushConfiguration.js"
+		
 	},
 	"repository": {
 		"type": "git",
