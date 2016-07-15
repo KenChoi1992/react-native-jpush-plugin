@@ -65,8 +65,8 @@ public class JPushModule extends ReactContextBaseJavaModule {
     public void initPush() {
         mContext = getCurrentActivity();
         JPushInterface.init(getReactApplicationContext());
-        Toast.makeText(mContext, "Init push success", Toast.LENGTH_SHORT).show();
-        Log.i("PushSDK", "init Success !");
+        Logger.toast(mContext, "Init push success");
+        Logger.i(TAG, "init Success!");
     }
 
     @ReactMethod
@@ -89,28 +89,28 @@ public class JPushModule extends ReactContextBaseJavaModule {
     public void stopPush() {
         mContext = getCurrentActivity();
         JPushInterface.stopPush(getReactApplicationContext());
-        Log.i("PushSDK", "stop push");
-        Toast.makeText(mContext, "Stop push success", Toast.LENGTH_SHORT).show();
+        Logger.i(TAG, "Stop push");
+        Logger.toast(mContext, "Stop push success");
     }
 
     @ReactMethod
     public void resumePush() {
         mContext = getCurrentActivity();
         JPushInterface.resumePush(getReactApplicationContext());
-        Log.i("PushSDK", "resume push");
-        Toast.makeText(mContext, "Resume push success", Toast.LENGTH_SHORT).show();
+        Logger.i(TAG, "Resume push");
+        Logger.toast(mContext, "Resume push success");
     }
 
     //为用户设置Tag,可以在服务端根据Tag推送消息
     @ReactMethod
     public void setTags(final ReadableArray strArray, final Callback callback) {
         mContext = getCurrentActivity();
-        Log.i(TAG, "tag: " + strArray.toString());
+        Logger.i(TAG, "tag: " + strArray.toString());
         if (strArray.size() > 0) {
             Set<String> tagSet = new LinkedHashSet<>();
             for (int i = 0; i < strArray.size(); i++) {
                 if (!ExampleUtil.isValidTagAndAlias(strArray.getString(i))) {
-                    Toast.makeText(mContext, "Invalid tag !", Toast.LENGTH_SHORT).show();
+                    Logger.toast(mContext, "Invalid tag !");
                     return;
                 }
                 tagSet.add(strArray.getString(i));
@@ -125,26 +125,25 @@ public class JPushModule extends ReactContextBaseJavaModule {
                             dialog.dismiss();
                             switch (status) {
                                 case 0:
-                                    Log.i(TAG, "Set tag success. tag: " + strArray.toString());
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "Set tag success", Toast.LENGTH_SHORT).show();
+                                    Logger.i(TAG, "Set tag success. tag: " + strArray.toString());
+                                    Logger.toast(getReactApplicationContext(), "Set tag success");
                                     callback.invoke(0);
                                     break;
                                 case 6002:
-                                    Log.i(TAG, "Set tag timeout");
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "Set tag timeout, check your network", Toast.LENGTH_SHORT).show();
+                                    Logger.i(TAG, "Set tag timeout");
+                                    Logger.toast(getReactApplicationContext(),
+                                            "Set tag timeout, check your network");
                                     callback.invoke("Set tag timeout");
                                     break;
                                 default:
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "Error code: " + status, Toast.LENGTH_SHORT).show();
+                                    Logger.toast(getReactApplicationContext(),
+                                            "Error code: " + status);
                                     callback.invoke("Set tag failed. Error code: " + status);
                             }
                         }
                     });
         } else {
-            Toast.makeText(mContext, "Empty tag ", Toast.LENGTH_SHORT).show();
+            Logger.toast(mContext, "Empty tag ");
         }
     }
 
@@ -153,7 +152,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
     public void setAlias(String str, final Callback callback) {
         mContext = getCurrentActivity();
         final String alias = str.trim();
-        Log.i(TAG, "alias: " + alias);
+        Logger.i(TAG, "alias: " + alias);
         if (!TextUtils.isEmpty(alias)) {
             JPushInterface.setAliasAndTags(getReactApplicationContext(), alias,
                     null, new TagAliasCallback() {
@@ -161,26 +160,24 @@ public class JPushModule extends ReactContextBaseJavaModule {
                         public void gotResult(int status, String desc, Set<String> set) {
                             switch (status) {
                                 case 0:
-                                    Log.i(TAG, "Set alias success");
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "Set alias success", Toast.LENGTH_SHORT).show();
+                                    Logger.i(TAG, "Set alias success");
+                                    Logger.toast(getReactApplicationContext(), "Set alias success");
                                     callback.invoke("Set alias success. alias: " + alias);
                                     break;
                                 case 6002:
-                                    Log.i(TAG, "Set alias timeout");
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "set alias timeout, check your network", Toast.LENGTH_SHORT).show();
+                                    Logger.i(TAG, "Set alias timeout");
+                                    Logger.toast(getReactApplicationContext(),
+                                            "set alias timeout, check your network");
                                     callback.invoke("Set alias timeout");
                                     break;
                                 default:
-                                    Toast.makeText(getReactApplicationContext(),
-                                            "Error code: " + status, Toast.LENGTH_SHORT).show();
+                                    Logger.toast(getReactApplicationContext(), "Error code: " + status);
                                     callback.invoke("Set alias failed. Error code: " + status);
                             }
                         }
                     });
         } else {
-            Toast.makeText(mContext, "Empty alias ", Toast.LENGTH_SHORT).show();
+            Logger.toast(mContext, "Empty alias ");
         }
     }
 
@@ -195,7 +192,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为点击后自动消失
         builder.notificationDefaults = Notification.DEFAULT_SOUND;  //设置为铃声（ Notification.DEFAULT_SOUND）或者震动（ Notification.DEFAULT_VIBRATE）
         JPushInterface.setPushNotificationBuilder(1, builder);
-        Toast.makeText(mContext, "Basic Builder - 1", Toast.LENGTH_SHORT).show();
+        Logger.toast(mContext, "Basic Builder - 1");
     }
 
 
@@ -212,7 +209,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         builder.layoutIconDrawable = IdHelper.getDrawable(mContext, "ic_launcher");
         builder.developerArg0 = "developerArg2";
         JPushInterface.setPushNotificationBuilder(2, builder);
-        Toast.makeText(mContext, "Custom Builder - 2", Toast.LENGTH_SHORT).show();
+        Logger.toast(mContext, "Custom Builder - 2");
     }
 
     @ReactMethod
@@ -237,26 +234,19 @@ public class JPushModule extends ReactContextBaseJavaModule {
             Bundle bundle = data.getExtras();
             if(JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
-                Log.i(TAG, "收到自定义消息: " + message);
+                Logger.i(TAG, "收到自定义消息: " + message);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("receivePushMsg", message);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
                 String message = bundle.getString(JPushInterface.EXTRA_ALERT);
-                Log.i(TAG, "收到推送下来的通知: " + message);
+                Logger.i(TAG, "收到推送下来的通知: " + message);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("receiveNotification", message);
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(data.getAction())) {
-                Log.d(TAG, "用户点击打开了通知");
+                Logger.d(TAG, "用户点击打开了通知");
                 WritableMap map = Arguments.fromBundle(bundle);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("openNotification", map);
-                if (mModule != null && mModule.mContext != null) {
-                    Intent intent = new Intent(context, mModule.mContext.getClass());
-                    intent.putExtras(bundle);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                    Log.d(TAG, "正在打开应用");
-                }
             }
         }
     }
