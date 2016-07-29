@@ -9,13 +9,15 @@
         android:id="@+id/rlRichpushTitleBar"
         android:layout_width="match_parent"
         android:layout_height="40.0dp"
-        android:background="#6b6b6b">
+        android:background="#29313a">
 
         <ImageButton
             android:id="@+id/imgRichpushBtnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/richpush_btn_selector" />
 
         <ImageView
@@ -32,11 +34,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10.0dp"
+            android:layout_marginLeft="7dp"
             android:layout_toRightOf="@id/imgView"
             android:clickable="false"
             android:text=" "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
     </RelativeLayout>
 
     <WebView

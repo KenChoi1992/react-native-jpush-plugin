@@ -1,6 +1,6 @@
 {
 	"name": "jpush-react-native",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "a jpush plugin for react native application",
 	"main": "index.js",
 	"scripts": {
@@ -15,7 +15,7 @@
 		"native",
 		"jpush"
 	],
-	"author": "KenChoi",
+	"author": "KenChoi, huminiOS",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/jpush/jpush-react-plugin/issues"

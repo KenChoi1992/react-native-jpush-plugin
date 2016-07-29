@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
@@ -224,6 +222,10 @@ public class JPushModule extends ReactContextBaseJavaModule {
         JPushInterface.clearAllNotifications(getReactApplicationContext());
     }
 
+    /**
+     * 接收自定义消息,通知,通知点击事件等事件的广播
+     * 文档链接:http://docs.jiguang.cn/client/android_api/
+     */
     public static class JPushReceiver extends BroadcastReceiver {
 
         public JPushReceiver() {
@@ -232,22 +234,37 @@ public class JPushModule extends ReactContextBaseJavaModule {
         @Override
         public void onReceive(Context context, Intent data) {
             Bundle bundle = data.getExtras();
-            if(JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
+            if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
                 Logger.i(TAG, "收到自定义消息: " + message);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("receivePushMsg", message);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
-                String message = bundle.getString(JPushInterface.EXTRA_ALERT);
-                Logger.i(TAG, "收到推送下来的通知: " + message);
+                // 通知内容
+                String alertContent = bundle.getString(JPushInterface.EXTRA_ALERT);
+                // extra 字段的 json 字符串
+                String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+                Logger.i(TAG, "收到推送下来的通知: " + alertContent);
+                WritableMap map = Arguments.createMap();
+                map.putString("alertContent", alertContent);
+                map.putString("extras", extras);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("receiveNotification", message);
+                        .emit("receiveNotification", map);
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(data.getAction())) {
                 Logger.d(TAG, "用户点击打开了通知");
                 WritableMap map = Arguments.fromBundle(bundle);
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("openNotification", map);
+                Intent intent = new Intent();
+                if (mModule != null && mModule.getCurrentActivity() != null) {
+                    intent.setClass(context, mModule.getCurrentActivity().getClass());
+                    Logger.d(TAG, "context.getClass: " + mModule.getCurrentActivity().getClass());
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         }
+
     }
 }

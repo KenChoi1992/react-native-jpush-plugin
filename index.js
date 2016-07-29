@@ -79,7 +79,7 @@ export default class JPush {
 			}
 		});
 	}
-	
+
 	static setAlias(alias, success, fail) {
 		JPushModule.setAlias(alias, (resultCode) => {
 			if (resultCode === 0) {
@@ -91,21 +91,21 @@ export default class JPush {
 	}
 
 	/**
-	 * Android 
+	 * Android
 	*/
 	static setStyleBasic() {
 		JPushModule.setStyleBasic();
 	}
 
 	/**
-	 * Android 
+	 * Android
 	*/
 	static setStyleCustom() {
 		JPushModule.setStyleCustom();
 	}
 
 	/**
-	 * Android 
+	 * Android
 	*/
 	static addReceiveCustomMsgListener(cb) {
 		listeners[cb] = DeviceEventEmitter.addListener(receiveCustomMsgEvent,
@@ -115,7 +115,7 @@ export default class JPush {
 	}
 
 	/**
-	 * Android 
+	 * Android
 	*/
 	static removeReceiveCustomMsgListener(cb) {
 		if (!listeners[cb]) {
@@ -126,12 +126,12 @@ export default class JPush {
 	}
 
 	/**
-	 * Android 
+	 * Android
 	*/
 	static addReceiveNotificationListener(cb) {
  		listeners[cb] = DeviceEventEmitter.addListener(receiveNotificationEvent,
- 			(message) => {
- 				cb(message);
+ 			(map) => {
+ 				cb(map);
  			});
  	}
  
