@@ -256,12 +256,18 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                         .emit("openNotification", map);
                 Intent intent = new Intent();
-                if (mModule != null && mModule.getCurrentActivity() != null) {
-                    intent.setClass(context, mModule.getCurrentActivity().getClass());
-                    Logger.d(TAG, "context.getClass: " + mModule.getCurrentActivity().getClass());
+                if (mModule != null && mModule.mContext != null) {
+                    intent.setClass(context, mModule.mContext.getClass());
+                    Logger.d(TAG, "context.getClass: " + mModule.mContext.getClass());
                     intent.putExtras(bundle);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                } else {
+                    String packageName = context.getApplicationContext().getPackageName();
+                    Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                    launchIntent.putExtras(bundle);
+                    context.startActivity(launchIntent);
                 }
             }
         }

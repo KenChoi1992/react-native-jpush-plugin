@@ -76,7 +76,9 @@ function insertJpushCode(path){
 		console.log(rf);
 	} else {
 		// console.log(searchDidlaunch[0]);
-		rf = rf.replace(searchDidlaunch[0],searchDidlaunch[0] + "\n  if \(\[\[UIDevice currentDevice\]\.systemVersion floatValue\] \>\= 8\.0\) \{\n\
+        var oldValue = rf.match(/\[JPUSHService registerForRemoteNotificationTypes/)
+        if(oldValue == null) {
+                    rf = rf.replace(searchDidlaunch[0],searchDidlaunch[0] + "\n  if \(\[\[UIDevice currentDevice\]\.systemVersion floatValue\] \>\= 8\.0\) \{\n\
     \[JPUSHService registerForRemoteNotificationTypes\:\(UIUserNotificationTypeBadge \|\n\
                                                       UIUserNotificationTypeSound \|\n\
                                                       UIUserNotificationTypeAlert\)\n\
@@ -90,23 +92,31 @@ function insertJpushCode(path){
   \n\
   \[JPUSHService setupWithOption\:launchOptions appKey\:\@\"" + appKey + "\"\n\
                         channel\:nil apsForProduction\:nil\]\;");
+                    fs.writeFileSync(path, rf, "utf-8");
+        }
+
 	}
-	fs.writeFileSync(path, rf, "utf-8");
+	
 	
 	//  这个插入代码 didRegisterForRemoteNotificationsWithDeviceToken
 	var rf = fs.readFileSync(path,"utf-8");
 	var search = rf.match(/\n.*didRegisterForRemoteNotificationsWithDeviceToken\:\(NSData \*\)deviceToken[ ]*\{/);
 
 	if (search == null) {
-		console.log("没有匹配到 地点 didRegisterForRemoteNotificationsWithDeviceToken");
+		console.log("没有匹配到 函数 didRegisterForRemoteNotificationsWithDeviceToken");
 		rf = rf.replace(/\@end/,"\- \(void\)application\:\(UIApplication \*\)application\ndidRegisterForRemoteNotificationsWithDeviceToken\:\(NSData \*\)deviceToken \{\n\[JPUSHService registerDeviceToken:deviceToken\]\;\n\}\n\@end");
 		// console.log(rf);
 		fs.writeFileSync(path, rf, "utf-8");
 	} else {
 		console.log(search[0]);
-		rf = rf.replace(search[0],search[0]+"\n\[JPUSHService registerDeviceToken:deviceToken\]\;");
-		// console.log(rf);
-		fs.writeFileSync(path, rf, "utf-8");
+        var oldValue = rf.match(/\[JPUSHService registerDeviceToken/)
+        if(oldValue == null) {
+            rf = rf.replace(search[0],search[0]+"\n\[JPUSHService registerDeviceToken:deviceToken\]\;");
+            fs.writeFileSync(path, rf, "utf-8");            
+        } else{
+            console.log("registerDeviceToken存在，不在插入");
+        }
+
 	}
 }
 
@@ -228,13 +238,12 @@ function configureAppkey(path) {
 	}
 
 	var rf = fs.readFileSync(path, "utf-8");
-	var searchAppkey = rf.match(/\n.*JPUSH_APPKEY\:/);
+	var searchAppkey = rf.match(/\n.*JPUSH_APPKEY\: \"yourAppKey\"/);
 	if (searchAppkey != null) {
-		rf = rf.replace(searchAppkey[0], searchAppkey[0] + "\"" + appKey + "\"");
+		rf = rf.replace(/yourAppKey/, appKey);
 		fs.writeFileSync(path, rf, "utf-8");
 	} else {
 		console.log("Did not find JPUSH_APPKEY in path: " + path);
-		console.log(rf);
 	}
 }
 
@@ -245,14 +254,17 @@ function configureSetting(path) {
 	}
 
 	var rf = fs.readFileSync(path, "utf-8");
-	var searchKey = rf.match(/\n.*include.*\n/);
-	if (searchKey != null) {
-		rf = rf.replace(searchKey[0], searchKey[0] + "\,\'\:jpush-react-native\'\nproject\(\'\:jpush-react-native\'\)\.projectDir = new File\(rootProject\.projectDir\, \'\.\.\/node_modules\/jpush-react-native\/android\'\n" );
-		fs.writeFileSync(path, rf, "utf-8");
-	} else {
-		console.log("Did not find include in path: " + path);
-		console.log(rf);
+	var isAlreadyWrite = rf.match(/.*jpush-react-native.*/);
+	if (isAlreadyWrite == null) {
+		var searchKey = rf.match(/\n.*include.*/);
+		if (searchKey != null) {
+			rf = rf.replace(searchKey[0], searchKey[0] + "\, \'\:jpush-react-native\'\nproject\(\'\:jpush-react-native\'\)\.projectDir = new File\(rootProject\.projectDir\, \'\.\.\/node_modules\/jpush-react-native\/android\'\)\n" );
+			fs.writeFileSync(path, rf, "utf-8");
+		} else {
+			console.log("Did not find include in settings.gradle: " + path);
+		}
 	}
+	
 }
 
 function configureGradle(path) {
@@ -261,13 +273,15 @@ function configureGradle(path) {
 		return;
 	}
 
-	var rf = fs.readdirSync(path, "utf-8");
-	var searchKey = rf.match(/\n.*compile fileTree.*\n/);
-	if (searchKey != null) {
-		rf = rf.replace(searchKey[0], searchKey[0] + "\ncompile project\(\'\:jpush-react-native\'\)\n");
-		fs.writeFileSync(path, rf, "utf-8");
-	} else {
-		console.log("Did not find compile in path: " + path);
-		console.log(rf);
+	var rf = fs.readFileSync(path, "utf-8");
+	var isAlreadyWrite = rf.match(/.*jpush-react-native.*/);
+	if (isAlreadyWrite == null) {
+		var searchKey = rf.match(/\n.*compile fileTree.*\n/);
+		if (searchKey != null) {
+			rf = rf.replace(searchKey[0], searchKey[0] + "    compile project\(\'\:jpush-react-native\'\)\n");
+			fs.writeFileSync(path, rf, "utf-8");
+		} else {
+			console.log("Did not find \"compile\" in path: " + path);
+		}
 	}
 }
