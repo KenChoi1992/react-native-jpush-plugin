@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6236F8DA1CF7E4D40030EAD5 /* jpush-ios-2.1.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6236F8D91CF7E4D40030EAD5 /* jpush-ios-2.1.7.a */; };
 		6280981B1CEDC453000D3A81 /* RCTJPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 628098191CEDC453000D3A81 /* RCTJPushModule.m */; };
 		6280981D1CEDC45D000D3A81 /* JPUSHService.h in Sources */ = {isa = PBXBuildFile; fileRef = 628098171CEDC453000D3A81 /* JPUSHService.h */; };
 		6280981E1CEDC45D000D3A81 /* RCTJPushModule.h in Sources */ = {isa = PBXBuildFile; fileRef = 628098181CEDC453000D3A81 /* RCTJPushModule.h */; };
+		629CA5151D93DBE800A1BA16 /* jpush-ios-2.1.9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629CA5141D93DBE800A1BA16 /* jpush-ios-2.1.9.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,11 +26,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6236F8D91CF7E4D40030EAD5 /* jpush-ios-2.1.7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.7.a"; sourceTree = "<group>"; };
 		6280980A1CEDC407000D3A81 /* libRCTJPushModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTJPushModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		628098171CEDC453000D3A81 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		628098181CEDC453000D3A81 /* RCTJPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushModule.h; sourceTree = "<group>"; };
 		628098191CEDC453000D3A81 /* RCTJPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushModule.m; sourceTree = "<group>"; };
+		629CA5141D93DBE800A1BA16 /* jpush-ios-2.1.9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.9.a"; sourceTree = "<group>"; };
+		629CA5161D93DBF800A1BA16 /* PushTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushTest.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6236F8DA1CF7E4D40030EAD5 /* jpush-ios-2.1.7.a in Frameworks */,
+				629CA5151D93DBE800A1BA16 /* jpush-ios-2.1.9.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +65,8 @@
 		6280980C1CEDC407000D3A81 /* RCTJPushModule */ = {
 			isa = PBXGroup;
 			children = (
-				6236F8D91CF7E4D40030EAD5 /* jpush-ios-2.1.7.a */,
+				629CA5161D93DBF800A1BA16 /* PushTest.entitlements */,
+				629CA5141D93DBE800A1BA16 /* jpush-ios-2.1.9.a */,
 				628098171CEDC453000D3A81 /* JPUSHService.h */,
 				628098181CEDC453000D3A81 /* RCTJPushModule.h */,
 				628098191CEDC453000D3A81 /* RCTJPushModule.m */,

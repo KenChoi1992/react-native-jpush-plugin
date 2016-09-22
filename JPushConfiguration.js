@@ -54,10 +54,14 @@ function insertJpushCode(path){
 	var rf = fs.readFileSync(path,"utf-8");
 	// 删除所有的 JPush 相关代码  注册推送的没有删除，
 	rf = rf.replace(/\n\#import \<RCTJPushModule.h\>/,"");
+    rf = rf.replace(/\n\#ifdef NSFoundationVersionNumber_iOS_9_x_Max/,"");
+    rf = rf.replace(/\n\#import \<UserNotifications\/UserNotifications\.h\>/,"");
+    rf = rf.replace(/\n\#import \<UserNotifications\/UserNotifications\.h\>/,"");
+    rf = rf.replace(/\n\#endif/,"");
 	rf = rf.replace(/\[JPUSHService registerDeviceToken:deviceToken\]\;\n/,"");
 
 	// 插入 头文件
-	rf = rf.replace(/#import "AppDelegate.h"/,"\#import \"AppDelegate.h\"\n\#import \<RCTJPushModule.h\>");
+	rf = rf.replace(/#import "AppDelegate.h"/,"\#import \"AppDelegate.h\"\n\#import \<RCTJPushModule.h\>\n\#ifdef NSFoundationVersionNumber_iOS_9_x_Max\n\#import \<UserNotifications\/UserNotifications\.h\>\n\#endif");
 	fs.writeFileSync(path, rf, "utf-8");
 
 
@@ -78,7 +82,7 @@ function insertJpushCode(path){
 		// console.log(searchDidlaunch[0]);
         var oldValue = rf.match(/\[JPUSHService registerForRemoteNotificationTypes/)
         if(oldValue == null) {
-                    rf = rf.replace(searchDidlaunch[0],searchDidlaunch[0] + "\n  if \(\[\[UIDevice currentDevice\]\.systemVersion floatValue\] \>\= 8\.0\) \{\n\
+                    rf = rf.replace(searchDidlaunch[0],searchDidlaunch[0] + "\n    if \(\[\[UIDevice currentDevice\]\.systemVersion floatValue\] >= 10.0\) \{\n \#ifdef NSFoundationVersionNumber_iOS_9_x_Max\n    JPUSHRegisterEntity \* entity \= \[\[JPUSHRegisterEntity alloc\] init\]\;\n     entity\.types \= UNAuthorizationOptionAlert\|UNAuthorizationOptionBadge\|UNAuthorizationOptionSound\;\n     \[JPUSHService registerForRemoteNotificationConfig\:entity delegate\:self\]\;\n \n\#endif\n\} else if \(\[\[UIDevice currentDevice\]\.systemVersion floatValue\] \>\= 8\.0\) \{\n\
     \[JPUSHService registerForRemoteNotificationTypes\:\(UIUserNotificationTypeBadge \|\n\
                                                       UIUserNotificationTypeSound \|\n\
                                                       UIUserNotificationTypeAlert\)\n\
