@@ -145,53 +145,73 @@ JPushModule.addReceiveOpenNotificationListener((map) => {
 - 打开iOS工程，在rnpm link 之后，RCTJPushModule.xcodeproj 工程会自动添加到 Libraries 目录里面
 - 在iOS工程target的Build Phases->Link Binary with Libraries中加入libz.tbd、CoreTelephony.framework、Security.framework
 - 在AppDelegate.h 文件中 填写如下代码，这里的的appkey、channel、和isProduction填写自己的
+```oc
+static NSString *jpushAppKey = @"";     //填写appkey
+static NSString *jpushChannel = @"";    //填写channel   一般为nil
+static BOOL jpushIsProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
 ```
-static NSString *appKey = @"";     //填写appkey
-static NSString *channel = @"";    //填写channel   一般为nil
-static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
-```
-- 在AppDelegate.m 的didFinishLaunchingWithOptions 方法里面添加如下代码
-```
+- 修改AppDelegate.m: 
+```oc
+//引入头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+  #import <UserNotifications/UserNotifications.h>
+#endif
+#import <RCTJPushModule.h>
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+  [self registerNotificationOptions:launchOptions];
+}
+
+- (void)registerNotificationOptions:(NSDictionary *)launchOptions {
+  if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+    #ifdef NSFoundationVersionNumber_iOS_9_x_Max
+      JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+      entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+      [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    #endif
+  } else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
     //可以添加自定义categories
     [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                       UIUserNotificationTypeSound |
                                                       UIUserNotificationTypeAlert)
                                           categories:nil];
   } else {
-    //iOS 8以前 categories 必须为nil
+    //categories 必须为nil
     [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                       UIRemoteNotificationTypeSound |
                                                       UIRemoteNotificationTypeAlert)
                                           categories:nil];
   }
   
-  [JPUSHService setupWithOption:launchOptions appKey:appKey
-                        channel:channel apsForProduction:isProduction];
+  [JPUSHService setupWithOption:launchOptions appKey:jpushAppKey
+                        channel:jpushChannel apsForProduction:jpushIsProduction];
 }
-```
-- 在AppDelegate.m 的didRegisterForRemoteNotificationsWithDeviceToken 方法中添加 [JPUSHService registerDeviceToken:deviceToken]; 如下所示
-```
-- (void)application:(UIApplication *)application
-didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
-```
-- 为了在收到推送点击进入应用能够获取该条推送内容需要在 AppDelegate.m didReceiveRemoteNotification 方法里面添加 [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo] 方法，注意：这里需要在两个方法里面加一个是iOS7以前的一个是iOS7即以后的，如果AppDelegate.m 没有这个两个方法则直接复制这两个方法；如下所示
-```
+
+//为了在收到推送点击进入应用能够获取该条推送内容
+//iOS >=8 Remote Notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
   // 取得 APNs 标准信息内容
-  
   [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
+
+//为了在收到推送点击进入应用能够获取该条推送内容
 //iOS 7 Remote Notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:  (NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
-  
   [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
+
+//(可选)进入前台后清除应用程序角标
+- (void)applicationWillEnterForeground:(UIApplication *)application { 
+  [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+}
+
 ```
+
 然后在 js 代码里面通过如下回调获取通知
 ```
 var { NativeAppEventEmitter } = require('react-native');
