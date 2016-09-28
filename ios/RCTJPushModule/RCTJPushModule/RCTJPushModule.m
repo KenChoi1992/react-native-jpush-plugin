@@ -431,8 +431,14 @@ RCT_EXPORT_METHOD(resetBadge) {
  * 更多的理解请参考 JPush 的文档网站.
  */
 RCT_EXPORT_METHOD(getRegistrationID:(RCTResponseSenderBlock)callback) {// -> string
+#if TARGET_IPHONE_SIMULATOR//模拟器
+  NSLog(@"simulator can not get registrationid");
+  callback(@[@""]);
+#elif TARGET_OS_IPHONE//真机
   NSLog(@"%@",[JPUSHService registrationID]);
   callback(@[[JPUSHService registrationID]]);
+#endif
+
 }
 
 /*!
